@@ -83,20 +83,23 @@ func part1(reports [][]int) int {
 }
 func part2(reports [][]int) int {
 	output := 0
-	for i, report := range reports {
-		log.Printf("Testing slice: %v ", report)
+	for _, report := range reports {
 		if checkSlice(report) {
-			log.Printf("SAFE\n")
 			output++
 			continue
 		}
-		clone := slices.Clone(report[:i])
-		if checkSlice(clone) {
-			output++
-			log.Printf("SAFE\n")
-			continue
+		for i := 0; i < len(report); i++ {
+			test := slices.Clone(report)
+			if i == len(test)-1 {
+				test = test[:i]
+			} else {
+				test = append(test[:i], test[i+1:]...)
+			}
+			if checkSlice(test) {
+				output++
+				break
+			}
 		}
-		log.Printf("UNSAFE\n")
 	}
 	return output
 }
