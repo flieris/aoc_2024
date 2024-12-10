@@ -142,17 +142,11 @@ func part2(inputs [][]rune) int {
 		moveX := posX
 		moveY := posY
 
-		tmpInputs := make([][]rune, len(inputs))
-		for i, line := range inputs {
-			tmpInputs[i] = make([]rune, len(line))
-			copy(tmpInputs[i], line)
-		}
-
-		tmpInputs[posY+dirY][posX+dirX] = '#'
-		if checkIfLooping(tmpInputs, moveX, moveY, dirX, dirY) {
+		inputs[posY+dirY][posX+dirX] = '#'
+		if checkIfLooping(inputs, moveX, moveY, dirX, dirY) {
 			count++
 		}
-		// we need to check if we are looping if we put obstacle right in front of the guard
+		inputs[posY+dirY][posX+dirX] = '.'
 		if nextPos == '#' {
 			tmp := dirX
 			dirX = -1 * dirY
